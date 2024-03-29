@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Resources\Api;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class WordResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'categoryId' => $this->category_id,
+            'letter' => $this->letter,
+            'word' => $this->word,
+            'definition' => $this->definition,
+        ];
+    }
+}
