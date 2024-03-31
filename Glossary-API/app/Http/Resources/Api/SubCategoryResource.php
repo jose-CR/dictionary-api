@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class WordResource extends JsonResource
+class SubCategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,8 @@ class WordResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'subCategoryId' => $this->sub_category_id,
-            'letter' => $this->letter,
-            'word' => $this->word,
-            'definition' => $this->definition,
+            'subcategory' => $this->subcategory,
+            'words' => WordResource::collection($this->whenLoaded('words'))
         ];
     }
 }

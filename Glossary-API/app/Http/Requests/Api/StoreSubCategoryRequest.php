@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BulkStoreWordRequest extends FormRequest
+class StoreSubCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,21 +22,16 @@ class BulkStoreWordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            '*.subCategoryId' => ['nullable', 'exists:categories,id'],
-            '*.letter' => ['required', 'string', 'min:1', 'max:255'],
-            '*.word' => ['required', 'string', 'min:1', 'max:255'],
-            '*.definition' => ['required', 'string', 'min:1', 'max:255']
+            'categoryId' => ['nullable', 'exists:categories,id'],
+            'subcategory' => ['required', 'string', 'min:1', 'max:255']
         ];
     }
 
     protected function prepareForValidation()
     {
-        $data = [];
-        foreach ($this->toArray() as $obj) 
-        {
-            $obj['sub_category_id'] = $obj['subCategoryId'] ?? null;
-            $data[] = $obj;
-        }
-        $this->merge($data);
+        $this->merge([
+            'category_id' => $this->categoryId
+            
+        ]);
     }
 }

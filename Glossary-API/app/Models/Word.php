@@ -14,11 +14,11 @@ class Word extends Model
         'letter',
         'word',
         'definition',
-        'category_id'
+        'sub_category_id'
     ];
 
-    public function category(): BelongsTo
+    public function subcategory(): BelongsTo
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(SubCategory::class);
     }
 }

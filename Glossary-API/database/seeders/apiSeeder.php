@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +16,8 @@ class apiSeeder extends Seeder
     {
         Category::factory()
         ->count(1)
-        ->haswords(100)
+        ->has(SubCategory::factory(2)
+        ->haswords(100))
         ->create();
     }
 }

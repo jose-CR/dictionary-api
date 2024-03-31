@@ -14,8 +14,8 @@ class Category extends Model
         'category'
     ];
 
-    public function words() : HasMany
+    public function subcategory() : HasMany
     {
-        return $this->hasMany(Word::class);
+        return $this->hasMany(SubCategory::class);
     }
 }

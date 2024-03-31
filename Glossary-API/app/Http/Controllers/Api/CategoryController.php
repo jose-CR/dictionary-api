@@ -20,11 +20,11 @@ class CategoryController extends Controller
     {
         $filter = new CategoryFilter();
         $queryItems = $filter->transform($request);
-        $includeWords = $request->query('includeWords');
+        $includeSubCategories = $request->query('includeSubCategories');
         $categories = Category::where($queryItems);
-        if($includeWords)
+        if($includeSubCategories)
         {
-            $categories = $categories->with('words');
+            $categories = $categories->with('subcategory');
         }
         return new CategoryCollection($categories->paginate()->appends($request->query()));
     }
@@ -50,10 +50,10 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        $includeWords = request()->query('includeWords');
-        if($includeWords)
+        $includeSubCategories = request()->query('includeSubCategories');
+        if($includeSubCategories)
         {
-            return new CategoryResource($category->loadMissing('words'));
+            return new CategoryResource($category->loadMissing('subcategory'));
         }
         return new CategoryResource($category);
     }

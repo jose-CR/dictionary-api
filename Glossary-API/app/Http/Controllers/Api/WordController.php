@@ -54,7 +54,7 @@ class WordController extends Controller
     {
         $bulk = collect($request->all())->map(function($arr, $key)
         {
-            return Arr::except($arr, ['categoryId']);
+            return Arr::except($arr, ['subCategoryId']);
         });
 
         Word::insert($bulk->toArray());
