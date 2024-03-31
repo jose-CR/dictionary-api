@@ -72,9 +72,17 @@ class WordController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, $id )
     {
-        //
+
+        $word = Word::findOrFail($id);
+
+        $word->update([
+            'word' => $request->input('word'),
+            'definition' => $request->input('definition'),
+        ]);
+
+        return response()->json(['message' => 'parametros editados correctamente']);
     }
 
     /**
@@ -88,8 +96,10 @@ class WordController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Word $word)
     {
-        //
+        $word->delete();
+
+        return to_route('table.word')->with(['message' => 'palabra eliminada']);
     }
 }

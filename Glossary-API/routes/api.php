@@ -27,4 +27,6 @@ Route::apiResource('subcategories', SubCategoryController::class);
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api'], function() {
     Route::post('words/bulk', [WordController::class, 'bulkStore']);
+    Route::delete('/words/{word}', [WordController::class, 'destroy'])->name('word.destroy');
+    Route::put('/word/{id}', [WordController::class, 'edit'])->name('word.edit');
 });
