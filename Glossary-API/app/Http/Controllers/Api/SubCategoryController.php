@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Filters\SubCategoryFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\CreateSubCategoryRequest;
 use App\Http\Requests\Api\StoreSubCategoryRequest;
 use App\Http\Resources\Api\SubCategoryCollection;
 use App\Http\Resources\Api\SubCategoryResource;
@@ -26,6 +27,11 @@ class SubCategoryController extends Controller
         return new SubCategoryCollection($subCategory->paginate()->appends($request->query()));
     }
 
+    public function create(CreateSubCategoryRequest $request, SubCategory $subCategory)
+    {
+        return new SubCategoryResource($subCategory::create($request->all()));
+    }
+
     public function store(StoreSubCategoryRequest $request)
     {
         return new SubCategoryResource(SubCategory::create($request->all()));
@@ -45,4 +51,24 @@ class SubCategoryController extends Controller
     {
         $subCategory->update($request->all());
     }
+
+    public function edit(Request $request, $id )
+    {
+
+        $subCategory = SubCategory::findOrFail($id);
+
+        $subCategory->update([
+            'subcategory' => $request->input('subCategory'),
+        ]);
+
+        return response()->json(['message' => 'parametros editados correctamente']);
+    }
+
+    public function destroy(SubCategory $subcategory)
+    {
+        $subcategory->delete();
+
+        return response()->json(['message' => 'sub categoria eliminada']);
+    }
+
 }
