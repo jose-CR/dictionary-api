@@ -23,8 +23,8 @@ const dialogForm = document.getElementById('form-dialog-' + id);
 dialogForm.close();
 }
 
-function submiteditForm(rowId) {
-event.preventDefault();
+function submiteditForm(rowId, event) {
+    event.preventDefault();
 
 let form = document.getElementById('editForm-' + rowId);
 let formData = new FormData(form);

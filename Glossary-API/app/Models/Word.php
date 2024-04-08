@@ -11,10 +11,10 @@ class Word extends Model
     use HasFactory;
 
     protected $fillable = [
+        'sub_category_id',
         'letter',
         'word',
-        'definition',
-        'sub_category_id'
+        'definition'
     ];
 
     public function subcategory(): BelongsTo

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Filters\CategoryFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\CreateSubCategoryRequest;
 use App\Http\Requests\Api\StorecategoryRequest;
 use App\Http\Requests\Api\UpdatecategoryRequest;
 use App\Http\Resources\Api\CategoryCollection;
@@ -29,16 +30,16 @@ class CategoryController extends Controller
         return new CategoryCollection($categories->paginate()->appends($request->query()));
     }
 
-    /**
-     * Show the form for creating a new resource.
+    /*
+        y este create es para lo visual 
      */
-    public function create()
+    public function create(CreateSubCategoryRequest $request, Category $category)
     {
-        //
+        return new CategoryResource($category::create($request->all()));
     }
 
-    /**
-     * Store a newly created resource in storage.
+    /*
+     este store es para la api 
      */
     public function store(StorecategoryRequest $request)
     {
@@ -61,9 +62,16 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, $id )
     {
-        //
+
+        $category = Category::findOrFail($id);
+
+        $category->update([
+            'category' => $request->input('Category'),
+        ]);
+
+        return response()->json(['message' => 'parametros editados correctamente']);
     }
 
     /**
@@ -77,8 +85,10 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return response()->json(['message' => 'categoria eliminada']);
     }
 }

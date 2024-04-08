@@ -2,6 +2,47 @@
     <x-slot:title> English Word List </x-slot:title>
 
     <x-slot name="slotcontent">
+        <x-ui.dialog id="openDialog" class="top-[80%] left-[30%]">
+            <x-slot name="slotdialog">
+                <span class="absolute top-1 right-3 text-xl cursor-pointer text-[#555] bg-none p-0" onclick="closeButton()">X</span>
+                <form action="{{ route('word.create') }}" method="post">
+                    @csrf
+                    <h1 class="text-2xl text-center mb-4">create words</h1>
+                    <section class="mb-4">
+                        <label for="subCategoryId" class="block mb-2">Subcategories</label>
+                        <select name="subCategoryId" id="subcategory" class="w-full py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400">
+                            <option value="" disabled selected>Subcategories</option>
+                            @foreach($subCategories as $subcategory)
+                                <option value="{{ $subcategory->id }}">{{ $subcategory->subcategory }}</option>
+                            @endforeach
+                        </select>
+                    </section>
+
+                    <section class="mb-4">
+                        <label for="letter" class="block mb-2">Letter</label>
+                        <select name="letter" id="letter" class="w-full py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400">
+                            <option value="" disabled selected>Select a letter</option>
+                            @foreach ($uniqueLetters as $letter)
+                                <option value="{{ $letter }}">{{ $letter }}</option>
+                            @endforeach
+                        </select>
+                    </section>
+
+                    <section class="mb-4">
+                        <label for="word" class="block mb-2">Word</label>
+                        <input type="text" name="word" id="word" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400">
+                    </section>
+
+                    <section class="mb-6">
+                        <label for="description" class="block mb-2">Description</label>
+                        <input type="text" name="definition" id="description" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400">
+                    </section>
+
+                    <button type="submit" class="w-full py-3 bg-blue-600 text-white rounded-md shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">Enviar</button>
+                </form> 
+            </x-slot>
+        </x-ui.dialog>
+
 
         <x-content.word :columns="['id', 'Letter', 'Word', 'description', 'Accions' ]" :data="$wordData" />
 

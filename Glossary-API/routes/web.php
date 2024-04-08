@@ -12,6 +12,7 @@ Route::get('/', function () {
 
 Route::get('table-word', [HomeController::class, 'word'])->name('table-word');
 Route::get('table-category', [HomeController::class, 'category'])->name('table-category');
+Route::get('table-subcategory', [HomeController::class, 'subcategory'])->name('table-subcategory');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
