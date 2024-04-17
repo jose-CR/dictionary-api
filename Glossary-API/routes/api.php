@@ -29,12 +29,12 @@ Route::apiResource('subcategories', SubCategoryController::class);
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api'], function() {
     Route::post('category/create', [CategoryController::class, 'create'])->name('category.create');
     Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
-    Route::put('/category/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::put('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
     Route::post('subcategory/create', [SubCategoryController::class, 'create'])->name('subcategory.create');
     Route::delete('/subcategory/{subcategory}', [SubCategoryController::class, 'destroy'])->name('subcategory.destroy');
-    Route::put('/subcategory/{id}', [SubCategoryController::class, 'edit'])->name('subcategory.edit');
+    Route::put('/subcategory/edit/{id}', [SubCategoryController::class, 'edit'])->name('subcategory.edit');
     Route::post('words/create', [WordController::class, 'create'])->name('word.create');
     Route::post('words/bulk', [WordController::class, 'bulkStore']);
     Route::delete('/words/{word}', [WordController::class, 'destroy'])->name('word.destroy');
-    Route::put('/word/{id}', [WordController::class, 'edit'])->name('word.edit');
+    Route::put('/word/edit/{id}', [WordController::class, 'edit'])->name('word.edit');
 });

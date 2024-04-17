@@ -33,7 +33,7 @@ class CategoryController extends Controller
     /*
         y este create es para lo visual 
      */
-    public function create(CreateSubCategoryRequest $request, Category $category)
+    public function create(StorecategoryRequest $request, Category $category)
     {
         return new CategoryResource($category::create($request->all()));
     }

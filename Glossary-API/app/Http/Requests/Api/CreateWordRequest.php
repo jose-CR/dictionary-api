@@ -22,18 +22,19 @@ class CreateWordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subCategoryId' => ['required', 'exists:sub_categories,id'],
+            'sub_category_id' => ['required', 'exists:sub_categories,id'],
             'letter' => ['required', 'string', 'min:1', 'max:255'],
             'word' => ['required', 'string', 'min:1', 'max:255'],
             'definition' => ['required', 'string', 'min:1', 'max:255']
         ];
     }
 
-    protected function prepareForValidation()
+/*      protected function prepareForValidation()
     {
-        // Utiliza sub_category_id en lugar de subCategoryId
+    if ($this->filled('subCategoryId')) {
         $this->merge([
             'sub_category_id' => $this->subCategoryId
         ]);
     }
+    } */
 }

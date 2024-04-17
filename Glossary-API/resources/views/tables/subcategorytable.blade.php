@@ -11,8 +11,8 @@
                     <h1 class="text-2xl text-center mb-4">create sub category</h1>
 
                     <section class="mb-4">
-                        <label for="categoryId" class="block mb-2">categories</label>
-                        <select name="categoryId" id="category" class="w-full py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400">
+                        <label for="category_id" class="block mb-2">categories</label>
+                        <select name="category_id" id="category" class="w-full py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400">
                             <option value="" disabled selected>categories</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->category }}</option>

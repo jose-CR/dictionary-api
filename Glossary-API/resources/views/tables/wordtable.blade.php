@@ -9,8 +9,8 @@
                     @csrf
                     <h1 class="text-2xl text-center mb-4">create words</h1>
                     <section class="mb-4">
-                        <label for="subCategoryId" class="block mb-2">Subcategories</label>
-                        <select name="subCategoryId" id="subcategory" class="w-full py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400">
+                        <label for="sub_category_id" class="block mb-2">Subcategories</label>
+                        <select name="sub_category_id" id="subcategory" class="w-full py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400">
                             <option value="" disabled selected>Subcategories</option>
                             @foreach($subCategories as $subcategory)
                                 <option value="{{ $subcategory->id }}">{{ $subcategory->subcategory }}</option>

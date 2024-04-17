@@ -16,6 +16,7 @@ class SubCategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'category' => $this->category,
             'subcategory' => $this->subcategory,
             'words' => WordResource::collection($this->whenLoaded('words'))
         ];

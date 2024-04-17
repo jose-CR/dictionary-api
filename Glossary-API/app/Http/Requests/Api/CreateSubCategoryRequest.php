@@ -22,15 +22,15 @@ class CreateSubCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'categoryId' => ['nullable', 'exists:categories,id'],
+            'category_id' => ['nullable', 'exists:categories,id'],
             'subcategory' => ['required', 'string', 'min:1', 'max:255']
         ];
     }
 
-    protected function prepareForValidation()
+/*      protected function prepareForValidation()
     {
         $this->merge([
             'category_id' => $this->categoryId
         ]);
-    }
+    } */
 }

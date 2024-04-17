@@ -8,11 +8,9 @@ use App\Http\Requests\Api\BulkStoreWordRequest;
 use App\Http\Requests\Api\CreateWordRequest;
 use App\Http\Resources\Api\WordCollection;
 use App\Http\Resources\Api\WordResource;
-use App\Models\SubCategory;
 use App\Models\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Log;
 
 class WordController extends Controller
 {
