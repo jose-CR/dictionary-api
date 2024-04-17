@@ -34,7 +34,8 @@ class WordController extends Controller
 
     public function create(CreateWordRequest $request, Word $word)
     {
-        return new WordResource($word::create($request->all()));
+        $newWord = $word::create($request->all());
+        return (new WordResource($newWord))->response()->setStatusCode(201);
     }
     
     public function bulkStore(BulkStoreWordRequest $request)
@@ -57,6 +58,7 @@ class WordController extends Controller
         $word = Word::findOrFail($id);
 
         $word->update([
+            'letter' => $request->input('letter'),
             'word' => $request->input('word'),
             'definition' => $request->input('definition'),
         ]);
@@ -74,6 +76,6 @@ class WordController extends Controller
     {
         $word->delete();
 
-        return response()->json(['message' => 'palabra eliminada']);
+        return response()->json(['message' => 'palabra eliminada'], 204);
     }
 }

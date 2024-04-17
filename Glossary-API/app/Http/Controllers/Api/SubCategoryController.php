@@ -29,7 +29,8 @@ class SubCategoryController extends Controller
 
     public function create(CreateSubCategoryRequest $request, SubCategory $subCategory)
     {
-        return new SubCategoryResource($subCategory::create($request->all()));
+        $newSubCategory = $subCategory::create($request->all());
+        return (new SubCategoryResource($newSubCategory))->response()->setStatusCode(201);
     }
 
     public function store(StoreSubCategoryRequest $request)
@@ -68,7 +69,7 @@ class SubCategoryController extends Controller
     {
         $subcategory->delete();
 
-        return response()->json(['message' => 'sub categoria eliminada']);
+        return response()->json(['message' => 'sub categoria eliminada'], 204);
     }
 
 }

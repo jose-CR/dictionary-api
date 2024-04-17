@@ -10,6 +10,7 @@ use App\Http\Requests\Api\UpdatecategoryRequest;
 use App\Http\Resources\Api\CategoryCollection;
 use App\Http\Resources\Api\CategoryResource;
 use App\Models\Category;
+use App\View\Components\content\category as ContentCategory;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -35,7 +36,8 @@ class CategoryController extends Controller
      */
     public function create(StorecategoryRequest $request, Category $category)
     {
-        return new CategoryResource($category::create($request->all()));
+        $newCategory = $category::create($request->all());
+        return (new CategoryResource($newCategory))->response()->setStatusCode(201);
     }
 
     /*
@@ -89,6 +91,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return response()->json(['message' => 'categoria eliminada']);
+        return response()->json(['message' => 'categoria eliminada'], 204);
     }
 }
