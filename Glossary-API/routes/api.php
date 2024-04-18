@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\SubCategoryController;
 use App\Http\Controllers\Api\WordController;
-use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,11 +21,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('words', WordController::class);
+Route::group([], function() {
+    
 Route::apiResource('categories', CategoryController::class);
+Route::apiResource('words', WordController::class);
 Route::apiResource('subcategories', SubCategoryController::class);
 
-Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api'], function() {
+});
+
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api', 'middleware' => 'auth:sanctum'], function() {
     Route::post('category/create', [CategoryController::class, 'create'])->name('category.create');
     Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
     Route::put('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
