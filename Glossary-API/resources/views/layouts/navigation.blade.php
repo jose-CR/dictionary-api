@@ -17,11 +17,6 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('table-word')" :active="request()->routeIs('table-word')">
-                        table word 
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('table-category')" :active="request()->routeIs('table-category')">
                         table category
                     </x-nav-link>
@@ -29,6 +24,11 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('table-subcategory')" :active="request()->routeIs('table-subcategory')">
                         table sub category
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('table-word')" :active="request()->routeIs('table-word')">
+                        table word 
                     </x-nav-link>
                 </div>
             </div>

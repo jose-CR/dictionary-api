@@ -29,7 +29,7 @@ Route::apiResource('subcategories', SubCategoryController::class);
 
 });
 
-Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api', 'middleware' => 'auth:sanctum'], function() {
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api'], function() {
     Route::post('category/create', [CategoryController::class, 'create'])->name('category.create');
     Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
     Route::put('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
