@@ -53,6 +53,8 @@ class HomeController extends Controller
                 'letter' => $word->letter,
                 'word' => $word->word,
                 'description' => $word->definition,
+                'oracion' => $word->sentence,
+                'oracion en español' => $word->spanish_sentence,
             ];
         });
         $uniqueLetters = $words->pluck('letter')->unique()->sort()->values()->all();

@@ -16,9 +16,15 @@
                 @foreach ($data as $row)
                     <tr class="text-base bg-white">
                         @foreach ($row as $value)
-                            <td class="border border-r-3 border-gray-300 py-2 px-4 text-center text-black text-pretty">{{ $value }}</td>    
+                            <td class="border border-r-3 border-gray-300 py-2 px-4 text-center text-black text-pretty">
+                                @if (is_array($value))
+                                {{ implode(', ', $value) }}
+                                @else
+                                    {{ $value }}
+                                @endif
+                            </td>    
                         @endforeach
-                            <td class="border border-r-3 border-gray-300 py-2 px-4 text-center text-black flex items-center justify-center space-x-4">
+                            <td class="border border-r-3 border-gray-300 py-10 px-4 text-center text-black flex items-center justify-center space-x-4">
                                 <button onclick="openButtonEdit('{{ $row['id'] }}')"  class="bg-blue-500 text-white py-2 px-4 rounded items-center">Edit</button>
                                 <form action="{{ route('word.destroy', $row['id']) }}" method="post">
                                     @csrf
@@ -36,7 +42,7 @@
                                 <h1 class="flex justify-center text-2xl">Edit words</h1>
                                 <hr class="border border-b-2">
                                 <input type="text" name="word" class="w-full mt-5 mb-7 rounded-lg border border-blue-500 text-black shadow-lg outline-none" placeholder="Word" value="{{ $row['word'] ?? '' }}">
-                                <input type="text" name="definition" class="w-full mt-5 mb-7 rounded-lg border border-blue-500 text-black shadow-lg outline-none" placeholder="Description" value="{{ $row['description'] ?? '' }}">
+                                <input type="text" name="definition" class="w-full mt-5 mb-7 rounded-lg border border-blue-500 text-black shadow-lg outline-none" placeholder="Description" value="{{ is_array($row['description']) ? implode(', ', $row['description']) : ($row['description'] ?? '') }}"> 
                                 <button type="submit" class="block w-full mt-5 mb-7 px-4 py-3 bg-blue-600 text-white shadow-lg border-blue-600 hover:bg-blue-600 ou">enviar</button>
                             </form> 
                         </x-slot>
