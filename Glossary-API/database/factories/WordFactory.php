@@ -18,12 +18,20 @@ class WordFactory extends Factory
     {
         $letter = $this->faker->randomLetter();
         $word = $this->faker->word();
-        $definition = $this->faker->sentence();
+        $definition = [
+            $this->faker->sentence(),
+            $this->faker->sentence(),
+            $this->faker->sentence()
+        ];
+        $spanishSentence = $this->faker->sentence();
+        $sentence = $this->faker->sentence();
 
         return [
             'letter' => $letter,
             'word' => $word,
             'definition' => $definition,
+            'spanish_sentence' => $spanishSentence,
+            'sentence' => $sentence,
         ];
     }
 }

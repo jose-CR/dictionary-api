@@ -44,7 +44,7 @@
         </x-ui.dialog>
 
 
-        <x-content.word :columns="['id', 'Letter', 'Word', 'description', 'Accions' ]" :data="$wordData" />
+        <x-content.word :columns="['id', 'Letter', 'Word', 'description', 'oracion', 'oracion en español' , 'Accions' ]" :data="$wordData" />
 
         <x-ui.pagination :data="$word" />
     </x-slot>

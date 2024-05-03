@@ -58,7 +58,7 @@ class WordController extends Controller
         $word = Word::findOrFail($id);
 
         $word->update([
-/*             'letter' => $request->input('letter'), */
+        /*  'letter' => $request->input('letter'), */
             'word' => $request->input('word'),
             'definition' => $request->input('definition'),
         ]);
