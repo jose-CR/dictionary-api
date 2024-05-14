@@ -2,9 +2,9 @@
     <x-slot:title> English Word List </x-slot:title>
 
     <x-slot name="slotcontent">
-        <x-ui.dialog id="openDialog" class="top-[80%] left-[30%]">
+        <x-ui.dialog x-ref="dialogRefEmpty" class="top-[80%] left-[30%]">
             <x-slot name="slotdialog">
-                <span class="absolute top-1 right-3 text-xl cursor-pointer text-[#555] bg-none p-0" onclick="closeButton()">X</span>
+                <span @click=" close() " class="absolute top-1 right-3 text-xl cursor-pointer text-[#555] bg-none p-0">X</span>
                 <form action="{{ route('word.create') }}" method="post">
                     @csrf
                     <h1 class="text-2xl text-center mb-4">create words</h1>
@@ -42,7 +42,6 @@
                 </form> 
             </x-slot>
         </x-ui.dialog>
-
 
         <x-content.word :columns="['id', 'Letter', 'Word', 'description', 'oracion', 'oracion en español' , 'Accions' ]" :data="$wordData" />
 
