@@ -23,15 +23,15 @@ class StoreSubCategoryRequest extends FormRequest
     {
         return [
             'categoryId' => ['nullable', 'exists:categories,id'],
-            'subcategory' => ['required', 'string', 'min:1', 'max:255']
+            'subCategory' => ['required', 'string', 'min:1', 'max:255']
         ];
     }
 
     protected function prepareForValidation()
     {
         $this->merge([
-            'category_id' => $this->categoryId
-            
+            'category_id' => $this->categoryId,
+            'subCategory' => $this->subcategory
         ]);
     }
 }

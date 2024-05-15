@@ -22,10 +22,12 @@ class BulkStoreWordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            '*.subCategoryId' => ['nullable', 'exists:categories,id'],
+            '*.sub_category_id' => ['nullable', 'exists:sub_categories,id'],
             '*.letter' => ['required', 'string', 'min:1', 'max:255'],
             '*.word' => ['required', 'string', 'min:1', 'max:255'],
-            '*.definition' => ['required', 'string', 'min:1', 'max:255']
+            '*.definition' => ['required', 'json'],
+            '*.spanish_sentence' => ['required', 'string', 'min:1', 'max:255'],
+            '*.sentence' => ['required', 'string', 'min:1', 'max:255']
         ];
     }
 

@@ -27,10 +27,10 @@ class CreateSubCategoryRequest extends FormRequest
         ];
     }
 
-/*      protected function prepareForValidation()
+    protected function prepareForValidation()
     {
         $this->merge([
             'category_id' => $this->categoryId
         ]);
-    } */
+    }
 }

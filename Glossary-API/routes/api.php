@@ -35,5 +35,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api'], func
     Route::post('words/create', [WordController::class, 'create'])->name('word.create');
     Route::post('words/bulk', [WordController::class, 'bulkStore']);
     Route::delete('/words/{word}', [WordController::class, 'destroy'])->name('word.destroy');
-    Route::put('/word/edit/{id}', [WordController::class, 'edit'])->name('word.edit');
+    Route::put('/words/edit/{id}', [WordController::class, 'edit'])->name('word.edit');
 });

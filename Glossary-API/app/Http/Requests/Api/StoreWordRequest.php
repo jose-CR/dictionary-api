@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateWordRequest extends FormRequest
+class StoreWordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,8 @@ class CreateWordRequest extends FormRequest
             'letter' => ['required', 'string', 'min:1', 'max:255'],
             'word' => ['required', 'string', 'min:1', 'max:255'],
             'definition' => ['required', 'json'],
-            'sentence' => ['required', 'string', 'min:1', 'max:255'],
-            'spanishSentence' => ['required', 'string', 'min:1', 'max:255']
+            'spanish_sentence' => ['required', 'string', 'min:1', 'max:255'],
+            'sentence' => ['required', 'string', 'min:1', 'max:255']
         ];
     }
 
@@ -35,7 +35,7 @@ class CreateWordRequest extends FormRequest
     {
     if ($this->filled('subCategoryId')) {
         $this->merge([
-            'sub_category_id' => $this->subCategoryId,
+            'sub_category_id' => $this->sub_category_id,
             "spanish_sentence" => $this->spanishSentence
         ]);
     }
