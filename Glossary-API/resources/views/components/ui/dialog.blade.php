@@ -3,16 +3,6 @@
 </dialog>
 
 <script>
-function openButton() {
-const dialogForm = document.getElementById('openDialog');
-dialogForm.showModal();
-}
-
-function closeButton(){
-const dialogForm = document.getElementById('openDialog');
-dialogForm.close();
-}
-
 function openButtonEdit(id) {
 const dialogForm = document.getElementById('form-dialog-' + id);
 dialogForm.showModal();
