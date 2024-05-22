@@ -27,17 +27,25 @@ class CreateWordRequest extends FormRequest
             'word' => ['required', 'string', 'min:1', 'max:255'],
             'definition' => ['required', 'json'],
             'sentence' => ['required', 'string', 'min:1', 'max:255'],
-            'spanishSentence' => ['required', 'string', 'min:1', 'max:255']
+            'spanish_sentence' => ['required', 'string', 'min:1', 'max:255']
         ];
     }
-
+    
     protected function prepareForValidation()
     {
-    if ($this->filled('subCategoryId')) {
-        $this->merge([
-            'sub_category_id' => $this->subCategoryId,
-            "spanish_sentence" => $this->spanishSentence
-        ]);
+
+        if ($this->filled('definition') && is_array($this->definition)) {
+            $this->merge([
+                'definition' => json_encode($this->definition)
+            ]);
+        }
+
+        if ($this->filled('subCategoryId')) {
+            $this->merge([
+                'sub_category_id' => $this->subCategoryId,
+                'spanish_sentence' => $this->spanishSentence
+            ]);
+        }
     }
-    } 
+    
 }

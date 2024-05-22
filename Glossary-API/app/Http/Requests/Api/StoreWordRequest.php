@@ -33,11 +33,17 @@ class StoreWordRequest extends FormRequest
 
     protected function prepareForValidation()
     {
-    if ($this->filled('subCategoryId')) {
-        $this->merge([
-            'sub_category_id' => $this->sub_category_id,
-            "spanish_sentence" => $this->spanishSentence
-        ]);
-    }
+        if ($this->filled('definition') && is_array($this->definition)) {
+            $this->merge([
+                'definition' => json_encode($this->definition)
+            ]);
+        }
+    
+        if ($this->filled('subCategoryId')) {
+            $this->merge([
+                'sub_category_id' => $this->subCategoryId,
+                'spanish_sentence' => $this->spanishSentence
+            ]);
+        }
     } 
 }

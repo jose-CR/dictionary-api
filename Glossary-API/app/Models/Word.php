@@ -27,14 +27,4 @@ class Word extends Model
     {
         return $this->belongsTo(SubCategory::class);
     }
-
-    public function setDefinition($value)
-    {
-        $this->attributes['definition'] = json_encode($value);
-    }
-
-    public function getDefinition($value)
-    {
-        return implode(', ', json_decode($value, true));
-    }
 }
