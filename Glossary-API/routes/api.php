@@ -21,9 +21,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
   
-Route::apiResource('categories', CategoryController::class);
-Route::apiResource('words', WordController::class);
-Route::apiResource('subcategories', SubCategoryController::class);
+Route::group(['middleware' => 'api.cors'], function() 
+{
+    Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('words', WordController::class);
+    Route::apiResource('subcategories', SubCategoryController::class);
+});
 
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api'], function() {
     Route::post('category/create', [CategoryController::class, 'create'])->name('category.create');
@@ -35,5 +38,5 @@ Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api'], func
     Route::post('words/create', [WordController::class, 'create'])->name('word.create');
     Route::post('words/bulk', [WordController::class, 'bulkStore']);
     Route::delete('/words/{word}', [WordController::class, 'destroy'])->name('word.destroy');
-    Route::put('/word/edit/{id}', [WordController::class, 'edit'])->name('word.edit');
+    Route::put('/words/edit/{id}', [WordController::class, 'edit'])->name('word.edit');
 });

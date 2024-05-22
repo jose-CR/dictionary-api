@@ -36,11 +36,11 @@ class GlossaryTest extends TestCase
     {
         $category = Category::factory()->create();
 
-        $response = $this->post(route('subcategory.create'), [
-            'category_id' => $category->id,
+        $response = $this->postJson(route('subcategory.create'), [
+            'categoryId' => $category->id,
             'subcategory' => 'verbo',
         ]);
-
+    
         $response->assertStatus(201);
         $this->assertDatabaseHas('sub_categories', [
             'category_id' => $category->id,
@@ -51,20 +51,40 @@ class GlossaryTest extends TestCase
     public function test_api_create_word()
     {
         $subcategory = SubCategory::factory()->create();
-
-        $response = $this->post(route('word.create'), [
+    
+        $response = $this->postJson(route('word.create'), [
             'sub_category_id' => $subcategory->id,
-            'letter' => 'e',
-            'word' => 'Ejemplo',
-            'definition' => 'Esto es un ejemplo de definición',
+            'letter' => 'a',
+            'word' => 'apple',
+            "definition" => ["manzana", "arbol"],
+            'sentence' => 'This is an apple.',
+            'spanish_sentence' => 'Esta es una manzana.'
         ]);
-
+    
         $response->assertStatus(201);
+    
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'subCategoryId',
+                'letter',
+                'word',
+                'definition',
+                'sentence',
+                'spanishSentence',
+            ]
+        ]);
+    
+        $responseData = $response->json('data');
+    
         $this->assertDatabaseHas('words', [
+            'id' => $responseData['id'],
             'sub_category_id' => $subcategory->id,
-            'letter' => 'e',
-            'word' => 'Ejemplo',
-            'definition' => 'Esto es un ejemplo de definición',
+            'letter' => $responseData['letter'],
+            'word' => $responseData['word'],
+            'definition' => json_encode($responseData['definition']),
+            'sentence' => $responseData['sentence'],
+            'spanish_sentence' => $responseData['spanishSentence'],
         ]);
     }
 
@@ -73,7 +93,7 @@ class GlossaryTest extends TestCase
         $category = Category::factory()->create();
 
         $response = $this->put(route('category.edit', ['id' => $category->id]), [
-            'Category' => 'español_actualizado'
+            'category' => 'español_actualizado'
         ]);
 
         $response->assertStatus(200);
@@ -100,20 +120,43 @@ class GlossaryTest extends TestCase
 
     public function test_api_edit_word()
     {
-        $word = Word::factory()->create();
-
-        $response = $this->put(route('word.edit', ['id' => $word->id]), [
+        $word = Word::factory()->create([
+            'definition' => json_encode(["manzana", "arbol"]), // Cambiado a JSON válido
+        ]);
+    
+        $response = $this->putJson(route('word.edit', ['id' => $word->id]), [
+            'subCategoryId' => $word->sub_category_id,
             'letter' => 'e_actualizado',
             'word' => 'Ejemplo_actualizado',
-            'definition' => 'Esto es un ejemplo de definición actualizado',
+            'definition' => ["definición", "actualizada"], // Cambiado a un array
+            'sentence' => 'Esta es una oración actualizada.',
+            'spanish_sentence' => 'Esta es una frase en español actualizada.'
         ]);
-
+    
         $response->assertStatus(200);
+    
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'subCategoryId',
+                'letter',
+                'word',
+                'definition',
+                'sentence',
+                'spanishSentence',
+            ]
+        ]);
+    
+        $responseData = $response->json('data');
+    
         $this->assertDatabaseHas('words', [
             'id' => $word->id,
-            'letter' => 'e_actualizado',
-            'word' => 'Ejemplo_actualizado',
-            'definition' => 'Esto es un ejemplo de definición actualizado',
+            'sub_category_id' => $responseData['subCategoryId'],
+            'letter' => $responseData['letter'],
+            'word' => $responseData['word'],
+            'definition' => json_encode($responseData['definition']), // Mantén la codificación JSON aquí
+            'sentence' => $responseData['sentence'],
+            'spanish_sentence' => $responseData['spanishSentence'],
         ]);
     }
 

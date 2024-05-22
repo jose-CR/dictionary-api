@@ -3,6 +3,7 @@
 
     <x-slot name="slotcontent">
         
+    <x-ui.dialog id="openDialog" class="top-[80%] left-[30%]">
     <x-ui.dialog x-ref="dialogRefEmpty" class="top-[80%] left-[30%]">
             <x-slot name="slotdialog">
                 <span @click=" close() " class="absolute top-1 right-3 text-xl cursor-pointer text-[#555] bg-none p-0">X</span>

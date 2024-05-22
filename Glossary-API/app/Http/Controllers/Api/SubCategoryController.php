@@ -24,13 +24,24 @@ class SubCategoryController extends Controller
             $subCategory = $subCategory->with('words');
         }
 
+        $subCategory = $subCategory->orderBy('id', 'asc');
         return new SubCategoryCollection($subCategory->paginate()->appends($request->query()));
     }
 
     public function create(CreateSubCategoryRequest $request, SubCategory $subCategory)
     {
-        $newSubCategory = $subCategory::create($request->all());
-        return (new SubCategoryResource($newSubCategory))->response()->setStatusCode(201);
+    // Obtén el 'categoryId' de la solicitud
+    $categoryId = $request->input('categoryId');
+    $subcategory = $request->input('subcategory');
+
+    // Crea la subcategoría utilizando los datos de la solicitud
+    $newSubCategory = $subCategory::create([
+        'category_id' => $categoryId,
+        'subcategory' => $subcategory // Debería ser 'subcategory' en minúscula
+    ]);
+
+    // Devuelve la nueva subcategoría como una respuesta JSON
+    return (new SubCategoryResource($newSubCategory))->response()->setStatusCode(201);
     }
 
     public function store(StoreSubCategoryRequest $request)

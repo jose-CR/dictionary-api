@@ -4,15 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Filters\CategoryFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\CreateSubCategoryRequest;
 use App\Http\Requests\Api\StorecategoryRequest;
 use App\Http\Requests\Api\UpdatecategoryRequest;
 use App\Http\Resources\Api\CategoryCollection;
 use App\Http\Resources\Api\CategoryResource;
 use App\Models\Category;
-use App\View\Components\content\category as ContentCategory;
 use Illuminate\Http\Request;
-
 class CategoryController extends Controller
 {
     /*
@@ -28,6 +25,8 @@ class CategoryController extends Controller
         {
             $categories = $categories->with('subcategory');
         }
+
+        $categories = $categories->orderBy('id', 'asc');
         return new CategoryCollection($categories->paginate()->appends($request->query()));
     }
 
@@ -64,15 +63,21 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, $id )
+    public function edit(StorecategoryRequest $request, $id )
     {
 
         $category = Category::findOrFail($id);
 
-        $category->update([
-            'category' => $request->input('Category'),
-        ]);
+        $category->update($request->all());
 
+        $input = $request->input('Category');
+
+        if ($input && $input != $category->category)
+        {
+            $category->update([
+                'category' => $input 
+            ]);
+        }
         return response()->json(['message' => 'parametros editados correctamente']);
     }
 
