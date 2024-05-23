@@ -4,37 +4,61 @@
 
 <script>
 function openButtonEdit(id) {
-const dialogForm = document.getElementById('form-dialog-' + id);
-dialogForm.showModal();
+    const dialogForm = document.getElementById('form-dialog-' + id);
+    dialogForm.showModal();
 }
 
 function closeButtonEdit(id) {
-const dialogForm = document.getElementById('form-dialog-' + id);
-dialogForm.close();
+    const dialogForm = document.getElementById('form-dialog-' + id);
+    dialogForm.close();
 }
 
 function submiteditForm(rowId, event) {
     event.preventDefault();
 
-let form = document.getElementById('editForm-' + rowId);
-let formData = new FormData(form);
+    let form = document.getElementById('editForm-' + rowId);
+    let formData = new FormData(form);
 
-fetch(form.action, {
-    method: form.method,
-    body: formData
-})
-.then(response => response.json())
-.then(data => {
-    if(data && data.message) {
-        console.log(data.message);
-    }
-    console.log(data);
-})
-.catch(error => {
-    console.log('Error', error)
-});
+    fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        console.log('Raw response:', response);
+
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            return response.json();
+        } else {
+            return response.text().then(text => {
+                console.error('Received non-JSON response:', text);
+                throw new Error(text);
+            });
+        }
+    })
+    .then(data => {
+        console.log('Parsed data:', data);
+        if (data.errors) {
+            // Maneja errores de validación
+            if (data.errors.category) {
+                alert(data.errors.category[0]);
+            }
+            if (data.errors.subCategory) {
+                alert(data.errors.subCategory[0]);
+            }
+        } else if (data.message) {
+            console.log(data.message);
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ha ocurrido un error: ' + error.message);
+    });
 }
-
 </script>
 
 <!-- People find pleasure in different ways. I find it in keeping my mind clear. - Marcus Aurelius -->

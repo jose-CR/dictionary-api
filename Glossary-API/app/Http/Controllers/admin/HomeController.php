@@ -52,7 +52,7 @@ class HomeController extends Controller
                 'id' => $word->id,
                 'letter' => $word->letter,
                 'word' => $word->word,
-                'description' => $word->definition,
+                'description' => json_decode($word->definition),
                 'sentence' => $word->sentence,
                 'spanish_sentence' => $word->spanish_sentence,
             ];

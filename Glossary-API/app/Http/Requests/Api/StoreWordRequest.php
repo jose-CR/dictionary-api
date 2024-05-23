@@ -23,7 +23,7 @@ class StoreWordRequest extends FormRequest
     {
         return [
             'sub_category_id' => ['nullable', 'exists:sub_categories,id'],
-            'letter' => ['required', 'string', 'min:1', 'max:255'],
+            'letter' => ['nullable', 'string', 'min:1', 'max:255'],
             'word' => ['required', 'string', 'min:1', 'max:255'],
             'definition' => ['required', 'json'],
             'spanish_sentence' => ['required', 'string', 'min:1', 'max:255'],

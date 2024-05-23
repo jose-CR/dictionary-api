@@ -9,6 +9,7 @@ use App\Http\Requests\Api\StoreSubCategoryRequest;
 use App\Http\Resources\Api\SubCategoryCollection;
 use App\Http\Resources\Api\SubCategoryResource;
 use App\Models\SubCategory;
+use Exception;
 use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
@@ -66,14 +67,22 @@ class SubCategoryController extends Controller
 
     public function edit(Request $request, $id )
     {
+        try {
+            $subCategory = SubCategory::findOrFail($id);
+            $input = $request->input('subCategory');
 
-        $subCategory = SubCategory::findOrFail($id);
+            if ($input && $input != $subCategory->subcategory) {
+                $subCategory->update([
+                    'subcategory' => $input,
+                ]);
+                return response()->json(['message' => 'Parámetros editados correctamente']);
+            } else {
+                return response()->json(['message' => 'No hay cambios en la subcategoría']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
 
-        $subCategory->update([
-            'subcategory' => $request->input('subCategory'),
-        ]);
-
-        return response()->json(['message' => 'parametros editados correctamente']);
     }
 
     public function destroy(SubCategory $subcategory)

@@ -36,7 +36,8 @@
                     <x-ui.dialog id="form-dialog-{{ $row['id'] }}" class="top-[90%] left-[50%]">
                         <x-slot name="slotdialog">
                             <span class="absolute top-1 right-3 text-xl cursor-pointer text-[#555] bg-none p-0" onclick="closeButtonEdit('{{ $row['id'] }}')">X</span>
-                            <form id="editForm-{{ $row['id'] }}" action="{{ route('word.edit', $row['id']) }}" onsubmit="return submiteditForm({{ $row['id'] }})" method="post">
+<form id="editForm-{{ $row['id'] }}" action="{{ route('word.edit', $row['id']) }}" onsubmit="return submiteditForm({{ $row['id'] }}, event)" method="post">
+
                                 @csrf
                                 @method('PUT')
                                 <h1 class="flex justify-center text-2xl">Edit words</h1>

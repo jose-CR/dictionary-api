@@ -9,6 +9,7 @@ use App\Http\Requests\Api\UpdatecategoryRequest;
 use App\Http\Resources\Api\CategoryCollection;
 use App\Http\Resources\Api\CategoryResource;
 use App\Models\Category;
+use Exception;
 use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
@@ -63,22 +64,24 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(StorecategoryRequest $request, $id )
+    public function edit(StorecategoryRequest $request, $id)
     {
-
-        $category = Category::findOrFail($id);
-
-        $category->update($request->all());
-
-        $input = $request->input('Category');
-
-        if ($input && $input != $category->category)
-        {
-            $category->update([
-                'category' => $input 
-            ]);
+        try {
+            $category = Category::findOrFail($id);
+            $category->update($request->all());
+    
+            $input = $request->input('category');
+    
+            if ($input && $input != $category->category) {
+                $category->update([
+                    'category' => $input 
+                ]);
+            }
+    
+            return response()->json(['message' => 'parámetros editados correctamente']);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-        return response()->json(['message' => 'parametros editados correctamente']);
     }
 
     /**

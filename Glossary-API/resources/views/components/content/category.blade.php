@@ -31,14 +31,14 @@
                     <x-ui.dialog id="form-dialog-{{ $row['id'] }}" class="top-[50%] left-[20%]">
                         <x-slot name="slotdialog">
                             <span class="absolute top-1 right-3 text-xl cursor-pointer text-[#555] bg-none p-0" onclick="closeButtonEdit('{{ $row['id'] }}')">X</span>
-                            <form id="editForm-{{ $row['id'] }}" action="{{ route('category.edit', $row['id']) }}" onsubmit="return submiteditForm({{ $row['id'] }})" method="post">
+                            <form id="editForm-{{ $row['id'] }}" action="{{ route('category.edit', $row['id']) }}" onsubmit="return submiteditForm({{ $row['id'] }}, event)" method="post">
                                 @csrf
                                 @method('PUT')
                                 <h1 class="flex justify-center text-2xl">Edit Category</h1>
                                 <hr class="border border-b-2">
-                                <input type="text" name="Category" class="w-full mt-5 mb-7 rounded-lg border border-blue-500 text-black shadow-lg outline-none" placeholder="Category" value="{{ $row['category'] ?? '' }}">
-                                <button type="submit" class="block w-full mt-5 mb-7 px-4 py-3 bg-blue-600 text-white shadow-lg border-blue-600 hover:bg-blue-600 ou">enviar</button>
-                            </form> 
+                                <input type="text" name="category" class="w-full mt-5 mb-7 rounded-lg border border-blue-500 text-black shadow-lg outline-none" placeholder="Category" value="{{ $row['category'] ?? '' }}">
+                                <button type="submit" class="block w-full mt-5 mb-7 px-4 py-3 bg-blue-600 text-white shadow-lg border-blue-600 hover:bg-blue-600 ou">Enviar</button>
+                            </form>                            
                         </x-slot>
                     </x-ui.dialog>
                 @endforeach

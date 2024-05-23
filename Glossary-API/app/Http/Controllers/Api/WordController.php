@@ -10,6 +10,7 @@ use App\Http\Requests\Api\StoreWordRequest;
 use App\Http\Resources\Api\WordCollection;
 use App\Http\Resources\Api\WordResource;
 use App\Models\Word;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -56,28 +57,52 @@ class WordController extends Controller
 
     public function edit(StoreWordRequest $request, $id )
     {
-        $word = Word::findOrFail($id);
+        try {
+            $word = Word::findOrFail($id);
+
+            $subCategory = $request->input('sub_category_id');
+            $letter = $request->input('letter');
+            $wordInput = $request->input('word');
+            $definition = $request->input('definition');
+            $sentence = $request->input('sentence');
+            $spanishSentence = $request->input('spanish_sentence');
     
-        $word->update([
-            'sub_category_id' => $request->input('sub_category_id'),
-            'letter' => $request->input('letter'),
-            'word' => $request->input('word'),
-            'definition' => json_encode($request->input('definition')), // Convertir a JSON aquí
-            'sentence' => $request->input('sentence'),
-            'spanish_sentence' => $request->input('spanish_sentence')
-        ]);
+            $changesDetected = false;
+            if ($subCategory && $subCategory != $word->sub_category_id) {
+                $word->sub_category_id = $subCategory;
+                $changesDetected = true;
+            }
+            if ($letter && $letter != $word->letter) {
+                $word->letter = $letter;
+                $changesDetected = true;
+            }
+            if ($wordInput && $wordInput != $word->word) {
+                $word->word = $wordInput;
+                $changesDetected = true;
+            }
+            if ($definition && $definition != $word->definition) {
+                $word->definition = $definition;
+                $changesDetected = true;
+            }
+            if ($sentence && $sentence != $word->sentence) {
+                $word->sentence = $sentence;
+                $changesDetected = true;
+            }
+            if ($spanishSentence && $spanishSentence != $word->spanish_sentence) {
+                $word->spanish_sentence = $spanishSentence;
+                $changesDetected = true;
+            }
     
-        return response()->json([
-            'data' => [
-                'id' => $word->id,
-                'subCategoryId' => $word->sub_category_id,
-                'letter' => $word->letter,
-                'word' => $word->word,
-                'definition' => $word->definition, // No necesitas decodificarlo aquí
-                'sentence' => $word->sentence,
-                'spanishSentence' => $word->spanish_sentence
-            ]
-        ]);
+            if ($changesDetected) {
+                $word->save();
+                return response()->json(['message' => 'Parámetros editados correctamente']);
+            } else {
+                return response()->json(['message' => 'No hay cambios en la palabra']);
+            }
+    
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
 
