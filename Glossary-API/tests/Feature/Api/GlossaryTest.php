@@ -120,43 +120,34 @@ class GlossaryTest extends TestCase
 
     public function test_api_edit_word()
     {
-        $word = Word::factory()->create([
-            'definition' => json_encode(["manzana", "arbol"]), // Cambiado a JSON válido
-        ]);
+        $subcategory = SubCategory::factory()->create();
+        $word = Word::factory()->create(['sub_category_id' => $subcategory->id]);
     
-        $response = $this->putJson(route('word.edit', ['id' => $word->id]), [
-            'subCategoryId' => $word->sub_category_id,
-            'letter' => 'e_actualizado',
-            'word' => 'Ejemplo_actualizado',
-            'definition' => ["definición", "actualizada"], // Cambiado a un array
-            'sentence' => 'Esta es una oración actualizada.',
-            'spanish_sentence' => 'Esta es una frase en español actualizada.'
-        ]);
+        $editData = [
+            'sub_category_id' => $subcategory->id,
+            'letter' => 'b',
+            'word' => 'banana',
+            'definition' => json_encode(["plátano", "fruta"]),
+            'sentence' => 'This is a banana.',
+            'spanish_sentence' => 'Esta es una banana.'
+        ];
+    
+        $response = $this->putJson(route('word.edit', ['id' => $word->id]), $editData);
     
         $response->assertStatus(200);
     
         $response->assertJsonStructure([
-            'data' => [
-                'id',
-                'subCategoryId',
-                'letter',
-                'word',
-                'definition',
-                'sentence',
-                'spanishSentence',
-            ]
+            'message'
         ]);
-    
-        $responseData = $response->json('data');
     
         $this->assertDatabaseHas('words', [
             'id' => $word->id,
-            'sub_category_id' => $responseData['subCategoryId'],
-            'letter' => $responseData['letter'],
-            'word' => $responseData['word'],
-            'definition' => json_encode($responseData['definition']), // Mantén la codificación JSON aquí
-            'sentence' => $responseData['sentence'],
-            'spanish_sentence' => $responseData['spanishSentence'],
+            'sub_category_id' => $editData['sub_category_id'],
+            'letter' => $editData['letter'],
+            'word' => $editData['word'],
+            'definition' => json_encode($editData['definition']),
+            'sentence' => $editData['sentence'],
+            'spanish_sentence' => $editData['spanish_sentence'],
         ]);
     }
 
