@@ -30,7 +30,12 @@
             </x-slot>
         </x-ui.dialog>
 
-        <x-content.subcategory :columns="['Id', 'Sub category', 'Accions' ]" :data="$subCategoryData" />
+        @role('admin')
+            <x-content.subcategory :columns="['Id', 'Sub category', 'Accions' ]" :data="$subCategoryData" />
+        @endrole
+        @role('user')
+            <x-content.subcategory :columns="['Id', 'Sub category']" :data="$subCategoryData" />
+        @endrole
 
         <x-ui.pagination :data="$subCategory" />
     </x-slot>

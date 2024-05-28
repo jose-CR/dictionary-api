@@ -55,8 +55,12 @@
             </x-slot>
         </x-ui.dialog>        
 
-        <x-content.word :columns="['id', 'Letter', 'Word', 'description', 'oracion', 'oracion en español' , 'Accions' ]" :data="$wordData" />
-
+        @role('admin')
+        <x-content.word :columns="['id', 'Letter', 'Word', 'description', 'oración', 'oracion en español' , 'Accions' ]" :data="$wordData" />
+        @endrole
+        @role('user')
+        <x-content.word :columns="['id', 'Letter', 'Word', 'description', 'oración', 'oracion en español']" :data="$wordData" />
+        @endrole
         <x-ui.pagination :data="$word" />
     </x-slot>
 </x-layouts.layout>

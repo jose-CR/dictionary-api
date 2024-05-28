@@ -18,6 +18,7 @@
                         @foreach ($row as $value)
                             <td class="border border-r-3 border-gray-300 py-2 px-4 text-center text-black text-pretty">{{ $value }}</td>    
                         @endforeach
+                        @role('admin')
                             <td class="border border-r-3 border-gray-300 py-2 px-4 text-center text-black flex items-center justify-center space-x-4">
                                 <button onclick="openButtonEdit('{{ $row['id'] }}')"  class="bg-blue-500 text-white py-2 px-4 rounded items-center">Edit</button>
                                 <form action="{{ route('subcategory.destroy', $row['id']) }}" method="post">
@@ -39,7 +40,8 @@
                                     <button type="submit" class="block w-full mt-5 mb-7 px-4 py-3 bg-blue-600 text-white shadow-lg border-blue-600 hover:bg-blue-600 ou">Enviar</button>
                                 </form> 
                             </x-slot>
-                        </x-ui.dialog>                        
+                        </x-ui.dialog>
+                        @endrole                       
                 @endforeach
             @endif
         </tbody>

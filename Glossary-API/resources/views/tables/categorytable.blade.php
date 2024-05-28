@@ -19,8 +19,12 @@
                 </x-slot>
         </x-ui.dialog>
 
-        <x-content.category :columns="['Id', 'Category', 'Accions' ]" :data="$categoryData" />
-
+        @role('admin')
+            <x-content.category :columns="['Id', 'Category', 'Accions' ]" :data="$categoryData" />
+        @endrole
+        @role('user')
+        <x-content.category :columns="['Id', 'Category']" :data="$categoryData" />
+        @endrole
         <x-ui.pagination :data="$category" />
     </x-slot>
 </x-layouts.layout>
