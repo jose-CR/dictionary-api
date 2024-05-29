@@ -11,14 +11,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('table-word', [HomeController::class, 'word'])->name('table-word');
-Route::get('table-category', [HomeController::class, 'category'])->name('table-category');
-Route::get('table-subcategory', [HomeController::class, 'subcategory'])->name('table-subcategory');
 Route::get('token',[SanctumController::class, 'AuthSanctum']);
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
