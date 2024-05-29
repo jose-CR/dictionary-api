@@ -43,7 +43,7 @@
                                 <h1 class="flex justify-center text-2xl">Edit words</h1>
                                 <hr class="border border-b-2">
                                 <input type="text" name="word" class="w-full mt-5 mb-7 rounded-lg border border-blue-500 text-black shadow-lg outline-none" placeholder="Word" value="{{ $row['word'] ?? '' }}">
-                                <input type="text" name="definition" class="w-full mt-5 mb-7 rounded-lg border border-blue-500 text-black shadow-lg outline-none" placeholder="Description" value="{{ is_array($row['description']) ? implode(', ', $row['description']) : ($row['description'] ?? '') }}"> 
+                                <input type="text" name="definition" class="w-full mt-5 mb-7 rounded-lg border border-blue-500 text-black shadow-lg outline-none" placeholder="Description" value="{{ isset($row['description']) ? json_encode($row['description']) : '' }}"> 
                                 <input type="text" name="sentence" class="w-full mt-5 mb-7 rounded-lg border border-blue-500 text-black shadow-lg outline-none" placeholder="Oración" value="{{ $row['sentence'] ?? '' }}">
                                 <input type="text" name="spanish_sentence" class="w-full mt-5 mb-7 rounded-lg border border-blue-500 text-black shadow-lg outline-none" placeholder="Oracion en español" value="{{ $row['spanish_sentence'] ?? '' }}">
                                 <button type="submit" class="block w-full mt-5 mb-7 px-4 py-3 bg-blue-600 text-white shadow-lg border-blue-600 hover:bg-blue-600 ou">enviar</button>
