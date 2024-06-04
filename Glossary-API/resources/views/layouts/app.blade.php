@@ -13,6 +13,10 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Alpine Ajax CDN -->
+        <script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.6.0/dist/cdn.min.js"></script>
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
