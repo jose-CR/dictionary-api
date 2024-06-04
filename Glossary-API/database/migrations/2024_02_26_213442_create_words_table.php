@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('cascade');
             $table->string('letter');
             $table->string('word');
-            $table->json('definition');
+            $table->text('definition');
             $table->string('spanish_sentence');
             $table->string('sentence');
             $table->timestamps();

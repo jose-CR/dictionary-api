@@ -44,7 +44,7 @@ class WordController extends Controller
     public function bulkStore(BulkStoreWordRequest $request)
     {
         $bulk = collect($request->all())->map(function($arr, $key) {
-            return Arr::except($arr, ['subCategoryId']);
+            return Arr::except($arr, ['subCategoryId', 'spanishSentence']);
         });
     
         Word::insert($bulk->toArray());

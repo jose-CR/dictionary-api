@@ -37,6 +37,11 @@ class BulkStoreWordRequest extends FormRequest
         foreach ($this->toArray() as $obj) 
         {
             $obj['sub_category_id'] = $obj['subCategoryId'] ?? null;
+            $obj['spanish_sentence'] = $obj['spanishSentence'] ?? null;
+            if( is_array($obj['definition'])) 
+            {
+                $obj['definition'] = json_encode($obj['definition']); 
+            }
             $data[] = $obj;
         }
         $this->merge($data);
