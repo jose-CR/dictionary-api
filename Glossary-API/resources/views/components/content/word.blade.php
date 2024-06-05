@@ -26,7 +26,7 @@
                         @endforeach
                         @role('admin')
                         <td class="border border-r-3 border-gray-300 py-10 px-4 text-center text-black flex items-center justify-center space-x-4">
-                            <button onclick="openButtonEdit('{{ $row['id'] }}')"  class="bg-blue-500 text-white py-2 px-4 rounded items-center">Edit</button>
+                            <button x-on:click="openButtonEdit('{{ $row['id'] }}')"  class="bg-blue-500 text-white py-2 px-4 rounded items-center">Edit</button>
                             <form action="{{ route('word.destroy', $row['id']) }}" method="post">
                                 @csrf
                                 @method('DELETE')
@@ -34,10 +34,10 @@
                             </form>
                         </td>
                     </tr>
-                    <x-ui.dialog id="form-dialog-{{ $row['id'] }}" class="top-[90%] left-[50%]">
+                    <x-ui.dialog id="form-dialog-{{ $row['id'] }}" x-data="{ isOpen: false }" class="top-[90%] left-[50%]">
                         <x-slot name="slotdialog">
-                            <span class="absolute top-1 right-3 text-xl cursor-pointer text-[#555] bg-none p-0" onclick="closeButtonEdit('{{ $row['id'] }}')">X</span>
-                                <form id="editForm-{{ $row['id'] }}" action="{{ route('word.edit', $row['id']) }}" onsubmit="return submiteditForm({{ $row['id'] }}, event)" method="post">
+                            <span class="absolute top-1 right-3 text-xl cursor-pointer text-[#555] bg-none p-0" x-on:click="closeButtonEdit('{{ $row['id'] }}')">X</span>
+                                <form id="editForm-{{ $row['id'] }}" action="{{ route('word.edit', $row['id']) }}" x-on:submit.prevent="submiteditForm('{{ $row['id'] }}', $event)" method="post">
                                 @csrf
                                 @method('PUT')
                                 <h1 class="flex justify-center text-2xl">Edit words</h1>
