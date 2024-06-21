@@ -20,10 +20,16 @@
         </x-ui.dialog>
 
         @role('admin')
-            <x-content.category :columns="['Id', 'Category', 'Accions' ]" :data="$categoryData" />
+        <livewire:components.category-table 
+            :columns="['Id', 'Category', 'Accions']"
+            :data="$categoryData"
+        />
         @endrole
         @role('user')
-        <x-content.category :columns="['Id', 'Category']" :data="$categoryData" />
+        <livewire:components.category-table 
+            :columns="['Id', 'Category']"
+            :data="$categoryData"
+        />
         @endrole
         <x-ui.pagination :data="$category" />
     </x-slot>
