@@ -44,7 +44,9 @@ class HomeController extends Controller
     {
         $word = Word::paginate(10);
         $words = Word::select('letter')->get();
-        $subCategories = SubCategory::select('subcategory', 'id')->get();
+        $subCategories = SubCategory::with('category:id,category')
+        ->select('id', 'subcategory', 'category_id')
+        ->get();
     
         $wordData = $word->map(function ($word) {
             return [
