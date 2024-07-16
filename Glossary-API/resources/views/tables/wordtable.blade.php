@@ -56,10 +56,10 @@
         </x-ui.dialog>        
 
         @role('admin')
-        <livewire:components.word-table :columns="['id', 'Letter', 'Word', 'description', 'oración', 'oracion en español' , 'Accions' ]" :data="$wordData">
+            <livewire:components.word-table :role="'admin'">
         @endrole
         @role('user')
-        <livewire:components.word-table :columns="['id', 'Letter', 'Word', 'description', 'oración', 'oracion en español']" :data="$wordData">
+            <livewire:components.word-table :role="'user'">
         @endrole
         <x-ui.pagination :data="$word" />
     </x-slot>

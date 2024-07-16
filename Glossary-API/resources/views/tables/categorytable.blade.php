@@ -19,18 +19,12 @@
                 </x-slot>
         </x-ui.dialog>
 
-        @role('admin')
-        <livewire:components.category-table 
-            :columns="['Id', 'Category', 'Accions']"
-            :data="$categoryData"
-        />
-        @endrole
-        @role('user')
-        <livewire:components.category-table 
-            :columns="['Id', 'Category']"
-            :data="$categoryData"
-        />
-        @endrole
+    @role('admin')
+        <livewire:components.category-table :role="'admin'" />
+    @endrole
+    @role('user')
+        <livewire:components.category-table :role="'user'" />
+    @endrole
         <x-ui.pagination :data="$category" />
     </x-slot>
 </x-layouts.layout>

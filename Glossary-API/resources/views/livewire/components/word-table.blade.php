@@ -1,4 +1,11 @@
 <div class="px-3 py-4 flex justify-center">
+    <div class="mb-4 flex items-center">
+        <input 
+            type="text" 
+            class="border border-gray-300 rounded-lg p-2 flex-grow outline-none"
+            placeholder="Buscar categoría..."
+            wire:model.live="search">
+    </div>
     <table class="w-full border-collapse">
         <thead>
             <tr class="text-lg bg-blue-200">
@@ -8,9 +15,9 @@
             </tr>
         </thead>
         <tbody>
-            @if ($data->isEmpty())
+            @if (empty($data))
                 <tr>
-                    <td colspan="5" class="text-center py-4 text-gray-600">No hay datos disponibles.</td>
+                    <td colspan="{{ count($columns) }}" class="text-center py-4 text-gray-600">No hay datos disponibles.</td>
                 </tr>
             @else
                 @foreach ($data as $row)

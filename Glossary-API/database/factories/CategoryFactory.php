@@ -16,7 +16,7 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $body = $this->faker->randomElement(['English word']);
+        $body = $this->faker->randomElement(['ingles', 'ruso', 'portugues', 'aleman', 'sueco']);
         return [
             'category' => $body,
         ];

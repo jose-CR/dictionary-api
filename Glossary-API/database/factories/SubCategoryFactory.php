@@ -16,7 +16,7 @@ class SubCategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $subCategory = $this->faker->randomElement(['adjetivo', 'verbo']);
+        $subCategory = $this->faker->randomElement(['adjetivo', 'verbo', 'sustantivo', 'descriptivo', 'indicativo']);
 
         return [
             'subcategory' => $subCategory
