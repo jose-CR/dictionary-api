@@ -61,6 +61,5 @@
         @role('user')
             <livewire:components.word-table :role="'user'">
         @endrole
-        <x-ui.pagination :data="$word" />
     </x-slot>
 </x-layouts.layout>

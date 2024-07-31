@@ -34,9 +34,7 @@
             <livewire:components.sub-category-table :role="'admin'"/>
         @endrole
         @role('user')
-            <livewire:components.sub-category-tabe :role="'user'"/>
+            <livewire:components.sub-category-table :role="'user'"/>
         @endrole
-
-        <x-ui.pagination :data="$subCategory" />
     </x-slot>
 </x-layouts.layout>

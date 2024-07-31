@@ -1,9 +1,9 @@
-<div class="px-3 py-4 flex justify-center">
-    <div class="mb-4 flex items-center">
+<div class="px-3 py-4 flex flex-col items-center">
+    <div class="mb-4 flex justify-center w-full">
         <input 
             type="text" 
-            class="border border-gray-300 rounded-lg p-2 flex-grow outline-none"
-            placeholder="Buscar categoría..."
+            class="border border-gray-300 rounded-lg p-2 w-full md:w-1/2 outline-none"
+            placeholder="Buscar palabra..."
             wire:model.live="search">
     </div>
     <table class="w-full border-collapse">
@@ -62,4 +62,9 @@
             @endif
         </tbody>
     </table>
+    <div class="mt-4 flex justify-center w-full">
+        <div class="pagination-container bg-white p-4 border border-gray-300 rounded-lg shadow-md">
+            {{ $data->links() }}
+        </div>
+    </div>
 </div>

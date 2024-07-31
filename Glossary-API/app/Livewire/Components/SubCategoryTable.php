@@ -5,24 +5,28 @@ namespace App\Livewire\Components;
 use App\Models\SubCategory;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class SubCategoryTable extends Component
 {
+
+    use WithPagination;
+
     public $columns = [];
-    public $data;
     public $search = '';
     public $role;
+
+    protected $updatesQueryString = ['search'];
 
     public function mount($role = null)
     {
         $this->role = $role ?? Auth::user()->roles->pluck('name')->first();
         $this->updateColumns();
-        $this->loadData();
     }
 
     public function updatedSearch()
     {
-        $this->loadData();
+        $this->resetPage();
     }
 
     public function updateColumns()
@@ -43,18 +47,14 @@ class SubCategoryTable extends Component
         $query->where('subcategory', 'like', '%' . $this->search . '%');
      }
 
-     $this->data = $query->get()->map(function ($subcategory) {
-        return [
-            'id' => $subcategory->id,
-            'subcategory' => $subcategory->subcategory,
-        ];
-    })->toArray();
+     return $query->paginate(10);
+
     }
 
     public function render()
     {
         return view('livewire.components.sub-category-table', [
-            'data' => $this->data,
+            'data' => $this->loadData(),
             'columns' => $this->columns,
         ]);
     }

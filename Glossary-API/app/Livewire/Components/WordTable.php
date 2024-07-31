@@ -5,24 +5,27 @@ namespace App\Livewire\Components;
 use App\Models\Word;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class WordTable extends Component
 {
+    use WithPagination;
+
     public $columns = [];
-    public $data;
     public $search = '';
     public $role;
+
+    protected $updatesQueryString = ['search'];
 
     public function mount($role = null)
     {
         $this->role = $role ?? Auth::user()->roles->pluck('name')->first();
         $this->updateColumns();
-        $this->loadData();
     }
 
     public function updatedSearch()
     {
-        $this->loadData();
+        $this->resetPage(); // Reset pagination when search is updated
     }
 
     public function updateColumns()
@@ -38,12 +41,11 @@ class WordTable extends Component
     {
         $query = Word::query();
 
-        if($this->search)
-        {
-           $query->where('word', 'like', '%' . $this->search . '%');
+        if ($this->search) {
+            $query->where('word', 'like', '%' . $this->search . '%');
         }
 
-        $this->data = $query->get()->map(function ($word) {
+        return $query->paginate(10)->through(function ($word) {
             return [
                 'id' => $word->id,
                 'letter' => $word->letter,
@@ -52,14 +54,13 @@ class WordTable extends Component
                 'sentence' => $word->sentence,
                 'spanish_sentence' => $word->spanish_sentence,
             ];
-        })->toArray();
+        });
     }
-
 
     public function render()
     {
         return view('livewire.components.word-table', [
-            'data' => $this->data,
+            'data' => $this->loadData(),
             'columns' => $this->columns,
         ]);
     }

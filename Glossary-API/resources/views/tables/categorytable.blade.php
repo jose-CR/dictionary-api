@@ -25,6 +25,5 @@
     @role('user')
         <livewire:components.category-table :role="'user'" />
     @endrole
-        <x-ui.pagination :data="$category" />
     </x-slot>
 </x-layouts.layout>
