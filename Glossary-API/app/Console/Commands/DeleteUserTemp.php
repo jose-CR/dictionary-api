@@ -13,7 +13,7 @@ class DeleteUserTemp extends Command
      *
      * @var string
      */
-    protected $signature = 'user:delete';
+    protected $signature = 'user:deleteTemp';
 
     /**
      * The console command description.
