@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         DB::transaction(function () {
-            $roles = ['admin', 'user', 'temp'];
+            $roles = ['admin', 'user'];
             foreach ($roles as $role) {
                 Role::firstOrCreate(['name' => $role]);
             }
@@ -25,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         DB::transaction(function () {
-            $roles = ['admin', 'user', 'temp'];
+            $roles = ['admin', 'user'];
             foreach ($roles as $role) {
                 Role::where('name', $role)->delete();
             }

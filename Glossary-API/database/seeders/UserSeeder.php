@@ -22,10 +22,5 @@ class UserSeeder extends Seeder
         ->count(100)
         ->withRoles(['admin'])
         ->create();
-
-        User::factory()
-        ->count(1000)
-        ->withRoles(['temp'])
-        ->create();
     }
 }
