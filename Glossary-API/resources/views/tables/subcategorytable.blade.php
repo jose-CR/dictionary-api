@@ -31,12 +31,10 @@
         </x-ui.dialog>
 
         @role('admin')
-            <x-content.subcategory :columns="['Id', 'Sub category', 'Accions' ]" :data="$subCategoryData" />
+            <livewire:components.sub-category-table :role="'admin'"/>
         @endrole
         @role('user')
-            <x-content.subcategory :columns="['Id', 'Sub category']" :data="$subCategoryData" />
+            <livewire:components.sub-category-table :role="'user'"/>
         @endrole
-
-        <x-ui.pagination :data="$subCategory" />
     </x-slot>
 </x-layouts.layout>

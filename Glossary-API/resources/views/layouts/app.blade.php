@@ -17,6 +17,8 @@
         <!-- Alpine Ajax CDN -->
         <script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.6.0/dist/cdn.min.js"></script>
 
+        <!-- livewire -->
+        @livewireStyles
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -36,5 +38,6 @@
                 {{ $slot }}
             </main>
         </div>
+        @livewireStyles
     </body>
 </html>

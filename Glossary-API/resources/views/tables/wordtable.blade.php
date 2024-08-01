@@ -14,7 +14,7 @@
                             <select name="sub_category_id" class="w-full py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400">
                                 <option value="" disabled selected>Subcategories</option>
                                 @foreach($subCategories as $subcategory)
-                                    <option value="{{ $subcategory->id }}">{{ $subcategory->subcategory }}</option>
+                                    <option value="{{ $subcategory->id }}">{{ $subcategory->category->category }} || {{ $subcategory->subcategory }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -56,11 +56,10 @@
         </x-ui.dialog>        
 
         @role('admin')
-        <x-content.word :columns="['id', 'Letter', 'Word', 'description', 'oración', 'oracion en español' , 'Accions' ]" :data="$wordData" />
+            <livewire:components.word-table :role="'admin'">
         @endrole
         @role('user')
-        <x-content.word :columns="['id', 'Letter', 'Word', 'description', 'oración', 'oracion en español']" :data="$wordData" />
+            <livewire:components.word-table :role="'user'">
         @endrole
-        <x-ui.pagination :data="$word" />
     </x-slot>
 </x-layouts.layout>

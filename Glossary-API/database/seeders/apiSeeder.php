@@ -15,9 +15,9 @@ class apiSeeder extends Seeder
     public function run(): void
     {
         Category::factory()
-        ->count(1)
-        ->has(SubCategory::factory(2)
-        ->haswords(100))
+        ->count(5)
+        ->has(SubCategory::factory(5)
+        ->haswords(10))
         ->create();
     }
 }

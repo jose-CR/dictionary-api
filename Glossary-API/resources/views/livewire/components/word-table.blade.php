@@ -1,4 +1,11 @@
-<div class="px-3 py-4 flex justify-center">
+<div class="px-3 py-4 flex flex-col items-center">
+    <div class="mb-4 flex justify-center w-full">
+        <input 
+            type="text" 
+            class="border border-gray-300 rounded-lg p-2 w-full md:w-1/2 outline-none"
+            placeholder="Buscar palabra..."
+            wire:model.live="search">
+    </div>
     <table class="w-full border-collapse">
         <thead>
             <tr class="text-lg bg-blue-200">
@@ -8,9 +15,9 @@
             </tr>
         </thead>
         <tbody>
-            @if ($data->isEmpty())
+            @if (empty($data))
                 <tr>
-                    <td colspan="5" class="text-center py-4 text-gray-600">No hay datos disponibles.</td>
+                    <td colspan="{{ count($columns) }}" class="text-center py-4 text-gray-600">No hay datos disponibles.</td>
                 </tr>
             @else
                 @foreach ($data as $row)
@@ -55,5 +62,9 @@
             @endif
         </tbody>
     </table>
+    <div class="mt-4 flex justify-center w-full">
+        <div class="pagination-container bg-white p-4 border border-gray-300 rounded-lg shadow-md">
+            {{ $data->links() }}
+        </div>
+    </div>
 </div>
-<!-- Because you are alive, everything is possible. - Thich Nhat Hanh -->
