@@ -14,7 +14,7 @@ class CreateNewUser extends Command
      *
      * @var string
      */
-    protected $signature = 'user:new-user';
+    protected $signature = 'user:new';
 
     /**
      * The console command description.

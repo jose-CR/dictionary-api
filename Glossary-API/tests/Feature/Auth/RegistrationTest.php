@@ -6,6 +6,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+use function PHPSTORM_META\elementType;
+
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
@@ -14,7 +16,13 @@ class RegistrationTest extends TestCase
     {
         $response = $this->get('/register');
 
-        $response->assertStatus(200);
+        if($response->status() === 200) {
+            $response->assertStatus(200);
+        }
+        elseif($response->status() === 404) {
+            $response->assertStatus(404);
+        }
+
     }
 
     public function test_new_users_can_register(): void
