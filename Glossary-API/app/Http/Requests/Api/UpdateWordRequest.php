@@ -21,32 +21,41 @@ class UpdateWordRequest extends FormRequest
      */
     public function rules(): array
     {
-        $method =  $this->method();
+        $method = $this->method();
 
         if($method == 'PUT'){
             return [
                 'subCategoryId' => ['nullable', 'exists:sub_categories,id'],
-                'letter' => ['required', 'string', 'min:1', 'max:255'],
+                'letter' => ['nullable', 'string', 'min:1', 'max:255'], 
                 'word' => ['required', 'string', 'min:1', 'max:255'],
-                'definition' => ['required', 'json', 'min:1'],
-                'spanish_sentence' => ['required', 'string', 'min:1', 'max:255'],
+                'definition' => ['required', 'json'],
+                'spanishSentence' => ['required', 'string', 'min:1', 'max:255'],
                 'sentence' => ['required', 'string', 'min:1', 'max:255']
             ];
         }
     }
 
-    protected function prepareForValidation(){
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation()
+    {
         if ($this->filled('definition') && is_array($this->definition)) {
             $this->merge([
                 'definition' => json_encode($this->definition)
             ]);
         }
-    
+
         if ($this->filled('subCategoryId')) {
             $this->merge([
-                'sub_category_id' => $this->subCategoryId,
+                'sub_category_id' => $this->subCategoryId
+            ]);
+        }
+
+        if ($this->filled('spanishSentence')) {
+            $this->merge([
                 'spanish_sentence' => $this->spanishSentence
             ]);
         }
-    } 
+    }
 }

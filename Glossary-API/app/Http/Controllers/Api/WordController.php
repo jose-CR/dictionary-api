@@ -64,9 +64,13 @@ class WordController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreWordRequest $request)
-    {
-        return new WordResource(Word::create($request->all()));
+    public function store(StoreWordRequest $request){
+        $Word = Word::create($request->all());
+
+        if($request->wantsJson()){
+            return new WordResource($Word);
+        }
+        return to_route('table-word');
     }
 
     public function bulkStore(BulkWordRequest $request){
@@ -85,29 +89,37 @@ class WordController extends Controller
         return new WordResource($word);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Word $word)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateWordRequest $request, Word $word)
-    {
-        $word->update($request->all());
+    public function update(UpdateWordRequest $request, Word $word){
+        try {
+            $word->update($request->all());
+
+            if($request->wantsJson()){
+                return response()->json(['message' => 'Word updated successfully'], 200);
+            }
+            return to_route('table-word');
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error updating word',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Word $word)
+    public function destroy(Word $word, Request $request)
     {
         $word->delete();
 
-        return response()->json(['message' => 'Word deleted successfully'], 200);
+        if($request->wantsJson()){
+            return response()->json(['message' => 'Word deleted successfully'], 200);
+        }
+
+        return to_route('table-word');
     }
 }

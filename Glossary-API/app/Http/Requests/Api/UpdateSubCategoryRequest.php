@@ -26,7 +26,7 @@ class UpdateSubCategoryRequest extends FormRequest
         if($method == 'PUT'){
             return [
                 'categoryId' => ['nullable', 'exists:categories,id'],
-                'subcategory' => ['required', 'string', 'min:1', 'max:255']
+                'subCategory' => ['required', 'string', 'min:1', 'max:255']
             ];
         }
     }
@@ -35,7 +35,7 @@ class UpdateSubCategoryRequest extends FormRequest
     {
         $this->merge([
             'category_id' => $this->categoryId,
-            'subCategory' => $this->subcategory
+            'subcategory' => $this->subCategory
         ]);
     }
 }

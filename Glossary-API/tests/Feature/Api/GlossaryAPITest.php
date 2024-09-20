@@ -6,7 +6,6 @@ use App\Models\Category;
 use App\Models\subCategory;
 use App\Models\Word;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class GlossaryAPITest extends TestCase
@@ -87,7 +86,7 @@ class GlossaryAPITest extends TestCase
     {
         $categoryData = ['category' => 'New Category'];
 
-        $response = $this->post(route('categories.store'), $categoryData);
+        $response = $this->postJson(route('categories.store'), $categoryData);
 
         $response->assertStatus(201)
                  ->assertJsonFragment($categoryData);
@@ -102,7 +101,7 @@ class GlossaryAPITest extends TestCase
     {
         $category = Category::factory()->create();
 
-        $response = $this->post(route('subcategories.store'), [
+        $response = $this->postJson(route('subcategories.store'), [
             'categoryId' => $category->id,
             'subcategory' => 'verbo',
         ]);
@@ -126,7 +125,7 @@ class GlossaryAPITest extends TestCase
 
         $wordData = ['subCategoryId' => $subcategory->id, 'letter' => $word->letter, 'word' =>  $word->word, 'definition' =>  $word->definition, 'sentence' =>  $word->sentence, 'spanishSentence' =>  $word->spanish_sentence];
 
-        $response = $this->post(route('words.store'), $wordData);
+        $response = $this->postJson(route('words.store'), $wordData);
 
         $response->assertStatus(201)
                  ->assertJsonFragment($wordData);
@@ -150,7 +149,7 @@ class GlossaryAPITest extends TestCase
                  ]);
     }
 
-        /**
+    /**
      * Test the show method of subController.
      *
      * @return void
@@ -206,7 +205,7 @@ class GlossaryAPITest extends TestCase
         $category = Category::factory()->create();
         $updatedData = ['category' => 'Updated Category'];
 
-        $response = $this->put(route('categories.update', ['category' => $category->id]), $updatedData);
+        $response = $this->putJson(route('categories.update', ['category' => $category->id]), $updatedData);
 
         $response->assertStatus(200);
 
@@ -214,7 +213,7 @@ class GlossaryAPITest extends TestCase
     }
 
         /**
-     * Test the update method of CategoryController.
+     * Test the update method of SubCategoryController.
      *
      * @return void
      */
@@ -223,7 +222,7 @@ class GlossaryAPITest extends TestCase
         $subcategory = subCategory::factory()->create();
         $updatedData = [
             'category_id' => $subcategory->category_id,
-            'subcategory' => $subcategory->subcategory,
+            'subCategory' => $subcategory->subcategory,
         ];
     
         $response = $this->put(route('subcategories.update', ['subcategory' => $subcategory->id]), $updatedData);
@@ -237,7 +236,7 @@ class GlossaryAPITest extends TestCase
     }
 
     /**
-     * Test the update method of CategoryController.
+     * Test the update method of WordController.
      *
      * @return void
      */
@@ -246,15 +245,15 @@ class GlossaryAPITest extends TestCase
         $subcategory = SubCategory::factory()->create();
         $word = Word::factory()->create();
         $updatedData = [
-            'sub_category_id' => $subcategory->id,
+            'subCategoryId' => $subcategory->id,
             'letter' => $word->letter,
             'word' => $word->word,
             'definition' => $word->definition,
             'sentence' => $word->sentence,
-            'spanish_sentence' => $word->spanish_sentence
+            'spanishSentence' => $word->spanish_sentence
         ];
     
-        $response = $this->put(route('words.update', ['word' => $word->id]), $updatedData);
+        $response = $this->putJson(route('words.update', ['word' => $word->id]), $updatedData);
     
         $response->assertStatus(200);
     
@@ -276,14 +275,18 @@ class GlossaryAPITest extends TestCase
     {
         $category = Category::factory()->create();
 
-        $response = $this->delete(route('categories.destroy', ['category' => $category->id]));
+        $response = $this->deleteJson(route('categories.destroy', ['category' => $category->id]));
 
         $response->assertStatus(200)
                  ->assertJson(['message' => 'Category deleted successfully']);
 
         $this->assertDatabaseMissing('categories', ['id' => $category->id]);
     }
-
+    /**
+     * Test the destroy method of SubCategoryontroller.
+     *
+     * @return void
+     */
     public function test_destroy_deletes_subcategory()
     {
         $subcategory = SubCategory::factory()->create();
@@ -296,7 +299,7 @@ class GlossaryAPITest extends TestCase
     }
 
     /**
-     * Test the destroy method of CategoryController.
+     * Test the destroy method of WordController.
      *
      * @return void
      */
@@ -304,7 +307,7 @@ class GlossaryAPITest extends TestCase
     {
         $word = Word::factory()->create();
 
-        $response = $this->delete(route('words.destroy', ['word' => $word->id]));
+        $response = $this->deleteJson(route('words.destroy', ['word' => $word->id]));
 
         $response->assertStatus(200)
                  ->assertJson(['message' => 'Word deleted successfully']);

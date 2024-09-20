@@ -41,6 +41,11 @@ class StoreWordRequest extends FormRequest
         if ($this->filled('subCategoryId')) {
             $this->merge([
                 'sub_category_id' => $this->subCategoryId,
+            ]);
+        }
+
+        if ($this->filled('spanishSentence')) {
+            $this->merge([
                 'spanish_sentence' => $this->spanishSentence
             ]);
         }

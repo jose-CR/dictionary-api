@@ -72,7 +72,14 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        return new CategoryResource(Category::create($request->all()));
+
+        $category = Category::create($request->all());
+
+        if($request->wantsJson()){
+            return new CategoryResource($category);
+        }
+
+        return to_route('table-category');
     }
 
     /**
@@ -102,15 +109,27 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->update($request->all());
+    
+        if($request->wantsJson()){
+            return response()->json([
+                'message' => 'Category updated successfully',
+                'data' => new CategoryResource($category),
+            ], 200);
+        }
+    
+        return to_route('table-category');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request, Category $category)
     {
         $category->delete();
+        if($request->wantsJson()){
+            return response()->json(['message' => 'Category deleted successfully'], 200);
+        }
 
-        return response()->json(['message' => 'Category deleted successfully'], 200);
+        return to_route('table-category');
     }
 }

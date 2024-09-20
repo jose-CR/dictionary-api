@@ -8,6 +8,7 @@ use App\Http\Requests\Api\StoreSubCategoryRequest;
 use App\Http\Requests\Api\UpdateSubCategoryRequest;
 use App\Http\Resources\Api\SubCategoryResource;
 use App\Models\subCategory;
+use Exception;
 use Illuminate\Http\Request;
 
 class subCategoryController extends Controller
@@ -70,7 +71,12 @@ class subCategoryController extends Controller
      */
     public function store(StoreSubCategoryRequest $request)
     {
-        return new subCategoryResource(subCategory::create($request->all()));
+        $subCategory = subCategory::create($request->all());
+    
+        if ($request->wantsJson()) {
+            return new subCategoryResource($subCategory);
+        }
+        return to_route('table-subcategory');
     }
 
     /**
@@ -103,23 +109,52 @@ class subCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSubCategoryRequest $request, subCategory $subCategory)
+    public function update(UpdateSubCategoryRequest $request, subCategory $subCategory, $id )
     {
-        $subCategory->update($request->all());
+        try {
+            $subCategory = SubCategory::findOrFail($id);
+            $input = $request->input('subCategory');
+
+            if ($input && $input != $subCategory->subcategory) {
+                $subCategory->update([
+                    'subcategory' => $input,
+                ]);
+                if($request->wantsJson()){
+                    return response()->json(['message' => 'Parámetros editados correctamente']);
+                }
+                return to_route('table-subcategory');
+            } else {
+                if($request->wantsJson()){
+                    return response()->json(['message' => 'No hay cambios en la subcategoría']);
+                }
+            }
+        } catch (Exception $e) {
+            if($request->wantsJson()){
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $subCategory = subCategory::find($id);
-
-        if($subCategory){
+    
+        if ($subCategory) {
             $subCategory->delete();
-            return response()->json(['message' => 'subCategory deleted successfully'], 200);
-        }else{
-            return response()->json(['message' => 'subCategory not found'], 404);
+    
+            if ($request->wantsJson()) {
+                return response()->json(['message' => 'SubCategory deleted successfully'], 200);
+            }
+            return to_route('table-subcategory');
         }
+    
+        if ($request->wantsJson()) {
+            return response()->json(['message' => 'SubCategory not found'], 404);
+        }
+    
+        return to_route('table-subcategory')->with('error', 'SubCategory not found.');
     }
 }
