@@ -27,7 +27,8 @@ class StoreWordRequest extends FormRequest
             'word' => ['required', 'string', 'min:1', 'max:255'],
             'definition' => ['required', 'json', 'min:1'],
             'spanishSentence' => ['required', 'string', 'min:1', 'max:255'],
-            'sentence' => ['required', 'string', 'min:1', 'max:255']
+            'sentence' => ['required', 'string', 'min:1', 'max:255'],
+            'times' => ['nullable', 'array']
         ];
     }
 
@@ -44,7 +45,7 @@ class StoreWordRequest extends FormRequest
             ]);
         }
 
-        if ($this->filled('spanishSentence')) {
+        if ($this->has('spanishSentence')) {
             $this->merge([
                 'spanish_sentence' => $this->spanishSentence
             ]);

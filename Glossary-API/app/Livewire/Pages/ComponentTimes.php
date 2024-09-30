@@ -6,37 +6,26 @@ use App\Models\Word;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ComponentWord extends Component
+class ComponentTimes extends Component
 {
     use WithPagination;
 
     public $columns = [];
-    public $search = '';
 
-    protected $updatesQueryString = ['search'];
 
     public function mount()
     {
         $this->updateColumns();
     }
 
-    public function updatedSearch()
-    {
-        $this->resetPage();
-    }
-
     public function updateColumns()
     {
-            $this->columns = ['Id', 'Letter', 'Word', 'Description', 'Oración', 'Oracion en español', 'Times', 'Acciones'];
+            $this->columns = ['Id', 'Word', 'Times', 'Definition', 'Sentence', 'oracion en español'];
     }
 
     public function loadData()
     {
         $query = Word::query();
-
-        if ($this->search) {
-            $query->where('word', 'like', '%' . $this->search . '%');
-        }
 
         return $query->orderBy('id')->paginate(30);
     }
@@ -50,7 +39,7 @@ class ComponentWord extends Component
 
     public function render()
     {
-        return view('livewire.pages.component-word', [
+        return view('livewire.pages.component-times', [
             'data' => $this->loadData(),
             'columns' => $this->columns,
         ]);

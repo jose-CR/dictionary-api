@@ -30,7 +30,8 @@ class UpdateWordRequest extends FormRequest
                 'word' => ['required', 'string', 'min:1', 'max:255'],
                 'definition' => ['required', 'json'],
                 'spanishSentence' => ['required', 'string', 'min:1', 'max:255'],
-                'sentence' => ['required', 'string', 'min:1', 'max:255']
+                'sentence' => ['required', 'string', 'min:1', 'max:255'],
+                'times' => ['nullable', 'array']
             ];
         }
     }

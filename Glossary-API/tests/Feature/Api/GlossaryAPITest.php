@@ -244,26 +244,29 @@ class GlossaryAPITest extends TestCase
     {
         $subcategory = SubCategory::factory()->create();
         $word = Word::factory()->create();
+        
         $updatedData = [
             'subCategoryId' => $subcategory->id,
             'letter' => $word->letter,
             'word' => $word->word,
             'definition' => $word->definition,
             'sentence' => $word->sentence,
-            'spanishSentence' => $word->spanish_sentence
+            'spanishSentence' => $word->spanish_sentence,
+            'times' => $word->times ?? null
         ];
-    
+        
         $response = $this->putJson(route('words.update', ['word' => $word->id]), $updatedData);
-    
+        
         $response->assertStatus(200);
-    
+        
         $this->assertDatabaseHas('words', [
             'sub_category_id' => $subcategory->id,
-            'letter' =>$word->letter,
+            'letter' => $word->letter,
             'word' => $word->word,
-            'definition' => $word->definition,
+            'definition' => json_encode($word->definition, JSON_UNESCAPED_UNICODE),
             'sentence' => $word->sentence,
-            'spanish_sentence' => $word->spanish_sentence
+            'spanish_sentence' => $word->spanish_sentence,
+            'times' => $word->times ? json_encode($word->times, JSON_UNESCAPED_UNICODE) : null
         ]);
     }
     /**

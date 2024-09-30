@@ -13,10 +13,14 @@ class AdminWord extends Controller
         return view('tables.table-word');
     }
 
+    public function times(){
+        return view('tables.table-times');
+    }
+
     public function updateword($id)
     {
-        $word = Word::findOrFail($id);
-        return view('tables.resources.word-edit', compact('word'));
+        $words = Word::findOrFail($id);
+        return view('tables.resources.word-edit', compact('words'));
     }
 
     public function createword(){

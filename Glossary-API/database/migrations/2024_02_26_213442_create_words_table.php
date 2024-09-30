@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('definition');
             $table->string('spanish_sentence');
             $table->string('sentence');
+            $table->json('times')->nullable();
             $table->timestamps();
         });
     }

@@ -9,6 +9,7 @@ use App\Http\Requests\Api\StoreWordRequest;
 use App\Http\Requests\Api\UpdateWordRequest;
 use App\Http\Resources\Api\WordResource;
 use App\Models\Word;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -65,20 +66,40 @@ class WordController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreWordRequest $request){
-        $Word = Word::create($request->all());
+        try {
+            $post = $request->isMethod('post');
+            $get = $request->isMethod('get');
+            $word = Word::create($request->all());
 
-        if($request->wantsJson()){
-            return new WordResource($Word);
+            if ($request == $post) {
+                return new WordResource($word);
+            }
+            elseif($request == $get){
+            return to_route('table-word');
+            }
+            
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error creando la palabra', 'message' => $e->getMessage()], 500);
         }
-        return to_route('table-word');
     }
 
     public function bulkStore(BulkWordRequest $request){
-        $bulk = collect($request->all())->map(function($arr, $key) {
-            return Arr::except($arr, ['subCategoryId', 'spanishSentence']);
-        });
+        try{
+            $bulk = collect($request->all())->map(function($arr, $key) {
     
-        Word::insert($bulk->toArray());
+            if (!isset($arr['times'])) {
+                $arr['times'] = null;
+            } elseif (is_array($arr['times'])) {
+                $arr['times'] = json_encode($arr['times']);
+            }
+
+                return Arr::except($arr, ['subCategoryId', 'spanishSentence']);
+            });
+        
+            Word::insert($bulk->toArray());   
+        } catch (Exception $e){
+            return response()->json(['error' => 'Error creando la palabra', 'message' => $e->getMessage()], 500);
+        }
     }
 
     /**

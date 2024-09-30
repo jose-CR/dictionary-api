@@ -27,7 +27,8 @@ class BulkWordRequest extends FormRequest
             '*.word' => ['required', 'string', 'min:1', 'max:255'],
             '*.definition' => ['required', 'json'],
             '*.spanishSentence' => ['required', 'string', 'min:1', 'max:255'],
-            '*.sentence' => ['required', 'string', 'min:1', 'max:255']
+            '*.sentence' => ['required', 'string', 'min:1', 'max:255'],
+            '*.times' => ['nullable', 'array'],
         ];
     }
 
@@ -38,8 +39,7 @@ class BulkWordRequest extends FormRequest
         {
             $obj['sub_category_id'] = $obj['subCategoryId'] ?? null;
             $obj['spanish_sentence'] = $obj['spanishSentence'] ?? null;
-            if( is_array($obj['definition'])) 
-            {
+            if( is_array($obj['definition'])) {
                 $obj['definition'] = json_encode($obj['definition']); 
             }
             $data[] = $obj;

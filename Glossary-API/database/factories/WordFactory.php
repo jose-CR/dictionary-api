@@ -25,6 +25,24 @@ class WordFactory extends Factory
         ]);
         $spanishSentence = $this->faker->sentence();
         $sentence = $this->faker->sentence();
+        if ($this->faker->boolean(50)) { // 50% de probabilidad
+            $times = collect(['pasado', 'ing'])
+                ->mapWithKeys(function ($key) {
+                    return [
+                        $key => [
+                            'definition' => [
+                                $this->faker->word(),
+                                $this->faker->word(),
+                                $this->faker->word(),
+                            ],
+                            'spanishSentence' => $this->faker->sentence(),
+                            'sentence' => $this->faker->sentence(),
+                        ],
+                    ];
+                })->toArray();
+        } else {
+            $times = null;
+        }
 
         return [
             'letter' => $letter,
@@ -32,6 +50,7 @@ class WordFactory extends Factory
             'definition' => $definition,
             'spanish_sentence' => $spanishSentence,
             'sentence' => $sentence,
+            'times' => $times,
         ];
     }
 }

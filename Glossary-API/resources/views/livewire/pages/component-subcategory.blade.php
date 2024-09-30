@@ -8,20 +8,20 @@
     </div>
     <table class="w-full border-collapse">
         <thead>
-            <tr class="text-lg bg-blue-200">
+            <tr class="text-lg bg-blue-500 text-white">
                 @foreach ($columns as $column)
-                    <th class="py-3 font-bold text-center bg-gray-200 text-gray-600 border border-gray-300">{{ $column }}</th>
+                    <th class="py-3 font-bold text-center bg-gray-400 text-gray-200 border border-gray-300">{{ $column }}</th>
                 @endforeach
             </tr>
         </thead>
         <tbody>
             @if ($data->isEmpty())
                 <tr>
-                    <td colspan="{{ count($columns) }}" class="text-center py-4 text-gray-600">No hay datos disponibles.</td>
+                    <td colspan="{{ count($columns) }}" class="text-center py-4 text-gray-600 italic">No hay datos disponibles.</td>
                 </tr>
             @else
                 @foreach ($data as $row)
-                    <tr class="text-base bg-white">
+                    <tr class="text-base bg-white hover:bg-gray-100 transition duration-200 ease-in-out">
                         @foreach ($columns as $column)
                             <td class="border border-gray-300 py-2 px-4 text-center text-black">
                                 @if ($column === 'Id')
@@ -30,13 +30,13 @@
                                     {{ $row->subcategory }}
                                 @elseif ($column === 'Acciones')
                                 <div class="flex items-center justify-center space-x-4">
-                                    <a href="{{ route('update-subcategory', $row->id) }}" class="bg-blue-500 text-white py-2 px-4 rounded items-center">
+                                    <a href="{{ route('update-subcategory', $row->id) }}" class="bg-blue-300 hover:bg-blue-600 transition duration-200 text-white py-2 px-4 rounded items-center">
                                         Edit
                                     </a>
                                     <form action="{{ route('subcategories.destroy', $row->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded items-center">Delete</button>
+                                        <button type="submit" class="bg-red-300 hover:bg-red-600 transition duration-200 text-white py-2 px-4 rounded items-center">Delete</button>
                                     </form>
                                 </div>
                                 @endif

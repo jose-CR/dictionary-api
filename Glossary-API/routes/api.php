@@ -21,10 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Version 1 
-Route::group(['prefix' => 'v1', ], function(){
+//Version 2 
+Route::group(['middleware' => 'api.cors', 'prefix' => 'v2', ], function(){
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('subcategories', subCategoryController::class);
     Route::apiResource('words', WordController::class);
+});
+
+Route::group(['prefix' => 'v2'], function(){    
     Route::post('words/bulk', [WordController::class, 'bulkStore']);
 });
