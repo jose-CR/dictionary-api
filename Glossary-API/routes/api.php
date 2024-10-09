@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\subCategoryController;
 use App\Http\Controllers\Api\WordController;
@@ -23,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //Version 2 
 Route::group(['middleware' => 'api.cors', 'prefix' => 'v2', ], function(){
+    Route::get('', [HomeController::class, 'principal'])->name('principal');
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('subcategories', subCategoryController::class);
     Route::apiResource('words', WordController::class);

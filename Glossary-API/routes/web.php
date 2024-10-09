@@ -14,9 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// pages principal
+
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('pages.index');
+})->name('index');
+
+Route::get('/documentation', function(){
+    return view('pages.docs');
+})->name('doc');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
