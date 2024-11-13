@@ -1,5 +1,5 @@
 <div>
-    <ul class="list-disc pl-8 space-y-2">
+    <ul class="list-disc pl-8 space-y-2 pb-4">
         @foreach ($tuplas as $tupla)
         <li><code class="bg-gray-200 text-red-500 px-2 py-1 mb-20 rounded">{{$tupla['name']}}</code> {{$tupla['description']}}</li>
         @endforeach
